@@ -1,0 +1,30 @@
+   
+<div class="container">
+<!-- 
+    <h2>See the world around you.</h2>
+    <p>Using Mapic is simple:</p>
+    <ol>
+        <li>Enter an address location below.</li>
+        <li>See beautiful photos from the specific locale.</li>
+    </ol> -->
+
+
+   <div class="search">
+    <form id="input" action="/" method="get">
+      <input class="address" type="text" name="address" placeholder="Enter a place or address.">
+      <input class="button" type="submit" value="Mapic!">
+    </form>
+  </div>
+
+	Longitude: <%= @geolocation_response['results'][0]['geometry']['location']['lng'] %><br><br>
+	Latitude: <%= @geolocation_response['results'][0]['geometry']['location']['lat'] %><br><br>
+
+    <% @media_response['data'].each do |media| %>
+    <h3>@<%= !media['user'].nil? ? media['user']['username'] : "" %> : </h3>
+    <p><%= !media['caption'].nil? ? media['caption']['text'] : "" %></p>
+	<img src="<%= media['images']['standard_resolution']['url'] %>"/>
+    <p><% media['images']['standard_resolution']['url'] %></p><br>
+
+ 	<% end %>
+
+</div>
