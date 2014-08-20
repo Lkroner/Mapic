@@ -2,26 +2,18 @@ require 'httparty'
 require 'pp'
 
 get '/' do
-  @address = params[:address]
-  @address.gsub!(" ", "+")
-  # render home page
-  @geolocation_response = HTTParty.get("https://maps.googleapis.com/maps/api/geocode/json?address=#{@address}&key=#{ENV["GOOGLE_KEY"]}")
-
-  @latitude, @longitude = @geolocation_response['results'][0]['geometry']['location'].values
-
-  @latitude
-  @longitude
-
-  pp @media_response = HTTParty.get("https://api.instagram.com/v1/media/search?lat=#{@latitude}&lng=#{@longitude}&access_token=#{ENV["ACCESS_TOKEN"]}")
-  # p @longitude = @geolocation_response['results'][0]['geometry']['location']['lng']
-  # p @latitude = @geolocation_response['results'][0]['geometry']['location']['lat']
-  # p @media_response['data'].length
+  if !params[:address].nil?
+	  @address = params[:address]
+	  @address.gsub!(" ", "+")
+	else
+  	@address = "Golden+Gate+Park,+San+Francisco,+CA"
+  end
+  	google_api = Google::Client.new
+  	instagram_api = Instagram::Client.new
+	  @geolocation_response = google_api.geolocation(@address)
+	  @latitude, @longitude = google_api.lat_lng
+	  @media_response = instagram_api.media(@latitude, @longitude)
   erb :index
-end
-
-post '/find_address/' do
-  @address = params[:address]
-
 end
 
 
