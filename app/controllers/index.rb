@@ -1,7 +1,31 @@
+require 'httparty'
+require 'pp'
+
 get '/' do
+  @address = params[:address]
+  @address.gsub!(" ", "+")
   # render home page
+  @geolocation_response = HTTParty.get("https://maps.googleapis.com/maps/api/geocode/json?address=#{@address}&key=#{ENV["GOOGLE_KEY"]}")
+
+  @latitude, @longitude = @geolocation_response['results'][0]['geometry']['location'].values
+
+  @latitude
+  @longitude
+
+  pp @media_response = HTTParty.get("https://api.instagram.com/v1/media/search?lat=#{@latitude}&lng=#{@longitude}&access_token=#{ENV["ACCESS_TOKEN"]}")
+  # p @longitude = @geolocation_response['results'][0]['geometry']['location']['lng']
+  # p @latitude = @geolocation_response['results'][0]['geometry']['location']['lat']
+  # p @media_response['data'].length
   erb :index
 end
+
+post '/find_address/' do
+  @address = params[:address]
+
+end
+
+
+
 
 #----------- SESSIONS -----------
 

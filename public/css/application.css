@@ -5,6 +5,13 @@ html {
   -o-background-size: cover;
   background-size: cover;
 }
+.button {
+  color: gray;
+}
+
+.address {
+  color: gray;
+}
 
 .container {
   color: #fff;

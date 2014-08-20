@@ -16,6 +16,7 @@ gem 'bcrypt'
 gem 'httparty'
 
 gem 'shotgun'
+gem 'dotenv'
 
 group :test do
   gem 'shoulda-matchers'
