@@ -16,15 +16,6 @@
     </form>
   </div>
 
-	Longitude: <%= @geolocation_response['results'][0]['geometry']['location']['lng'] %><br><br>
-	Latitude: <%= @geolocation_response['results'][0]['geometry']['location']['lat'] %><br><br>
-
-    <% @media_response['data'].each do |media| %>
-    <h3>@<%= !media['user'].nil? ? media['user']['username'] : "" %> : </h3>
-    <p><%= !media['caption'].nil? ? media['caption']['text'] : "" %></p>
-	<img src="<%= media['images']['standard_resolution']['url'] %>"/>
-    <p><% media['images']['standard_resolution']['url'] %></p><br>
-
- 	<% end %>
-
+<div class="image_list">
+ <%= erb :image_response %>
 </div>
