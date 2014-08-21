@@ -1,10 +1,8 @@
+<div id="images">	
+    <% media_response['data'].each do |media| %>
+     	<div class="img-container">
+	  		<img src="<%= media['images']['standard_resolution']['url'] %>"/>
 
-<div class = "images">	
-    <% @media_response['data'].each do |media| %>
-     <div class="img-container">
-	  <img src="<%= media['images']['standard_resolution']['url'] %>"/>
-	  <h3>@<%= !media['user'].nil? ? media['user']['username'] : "" %> : </h3>
-      <p><%= !media['caption'].nil? ? media['caption']['text'] : "" %></p>
-	</div>
+		</div>
  	<% end %>
- </div>
+</div>

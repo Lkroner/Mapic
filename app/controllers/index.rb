@@ -4,26 +4,21 @@ require 'securerandom'
 require 'json'
 
 get '/' do
-  if !params[:address].nil?
-	  @address = params[:address]
-	  @address.gsub!(" ", "+")
-	else
-  	@address = "Golden+Gate+Park,+San+Francisco,+CA"
-  end
-  	google_api = Google::Client.new
-  	instagram_api = Instagram::Client.new
-	  @geolocation_response = google_api.geolocation(@address)
-	  @latitude, @longitude = google_api.lat_lng
-	  @media_response = instagram_api.media(@latitude, @longitude)
   erb :index
 end
 
 post '/' do
-	 content_type :json
-    {geolocation: @geolocation_response, 
-     latitude: @latitude, 
-     longitude: @longitude, 
-     media: @media_response}.to_json
+	  p address = params[:address]
+	  address.gsub!(" ", "+")
+
+  	google_api = Google::Client.new
+  	instagram_api = Instagram::Client.new
+	  @geolocation_response = google_api.geolocation(address)
+	  @latitude, @longitude = google_api.lat_lng
+	  p @media_response = instagram_api.media(@latitude, @longitude)
+    partial = erb :image_response, :layout => false, :locals => {media_response: @media_response}
+    content_type :json
+    {html: partial, longitude: @longitude, latitude: @latitude}.to_json
 end
 
 

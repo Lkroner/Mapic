@@ -82,7 +82,9 @@ form label {
 input {
   margin-bottom: 10px;
 }
-
+.address {
+  color: black;
+}
 .errors {
   color: red;
 }
