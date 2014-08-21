@@ -1,5 +1,7 @@
 require 'httparty'
 require 'pp'
+require 'securerandom'
+require 'json'
 
 get '/' do
   if !params[:address].nil?
@@ -16,15 +18,28 @@ get '/' do
   erb :index
 end
 
-
+post '/' do
+	 content_type :json
+    {geolocation: @geolocation_response, 
+     latitude: @latitude, 
+     longitude: @longitude, 
+     media: @media_response}.to_json
+end
 
 
 #----------- SESSIONS -----------
 
-# get '/sessions/new' do
-#   # render sign-in page
-#   erb :sign_in
-# end
+get '/sign_in' do
+  # render sign-in page
+  erb :sign_in
+end
+
+get '/redirect_auth_url' do
+	redirect "https://api.instagram.com/oauth/authorize/?" +
+	"client_id=1063513989802-jmd0ljou37g3o7en8cj60fs5bhjk6q6f.apps.googleusercontent.com" +
+	"&redirect_uri=http://localhost:9393/logged_in" +
+	"&response_type=code"
+end
 
 # post '/sessions' do
 #   # sign-in

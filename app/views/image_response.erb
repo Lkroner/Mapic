@@ -1,12 +1,10 @@
 
 <div class = "images">	
-	Longitude: <%= !@geolocation_response.nil? ? @geolocation_response['results'][0]['geometry']['location']['lng'] : "" %><br><br>
-	Latitude: <%= !@geolocation_response.nil? ? @geolocation_response['results'][0]['geometry']['location']['lat'] : "" %><br><br>
-
     <% @media_response['data'].each do |media| %>
-      <h3>@<%= !media['user'].nil? ? media['user']['username'] : "" %> : </h3>
-      <p><%= !media['caption'].nil? ? media['caption']['text'] : "" %></p>
+     <div class="img-container">
 	  <img src="<%= media['images']['standard_resolution']['url'] %>"/>
-
+	  <h3>@<%= !media['user'].nil? ? media['user']['username'] : "" %> : </h3>
+      <p><%= !media['caption'].nil? ? media['caption']['text'] : "" %></p>
+	</div>
  	<% end %>
  </div>
