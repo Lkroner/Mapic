@@ -1,28 +1,47 @@
 
-// If you need to find out the latitude and longitude of an 
-// address using the Google Maps API, you need to use the Google Maps Geocoding Service:
+
+map = L.map('map').setView([51.505, -0.09], 13);
+
+L.tileLayer('http://{s}.tiles.mapbox.com/v3/lkroner.j9ino1jm/{z}/{x}/{y}.png', {
+    maxZoom: 18
+}).addTo(map);
+
+var marker = L.marker([51.5, -0.09]).addTo(map);
+
+var popup = L.popup();
 
 
-var map = new GMap2(document.getElementById("map_canvas"));
-var geocoder = new GClientGeocoder();
+// function onMapClick(e) {
+//     popup
+//         .setLatLng(e.latlng)
+//         .setContent("You clicked the map at " + e.latlng.toString())
+//         .openOn(map);
+// }
 
-var address = "1600 Amphitheatre Parkway, Mountain  View";
-geocoder.getLatLng(address, function(point) {
-         var latitude = point.y;
-         var longitude = point.x;  
-
-         // do something with the lat lng
-    });
+// map.on('click', onMapClick);
 
 
-// If you would like to get the latitude and longitude of a position clicked 
-// on your Google map, you can do this in the click event:
+var findImages = function (event) {
+	console.log("Hey friends. I made it!")
+	event.preventDefault();
+	
+var ajaxGetImages = $.ajax({
+	url: '/',
+	data: $(this).serialize(),
+	type: 'POST'
+})
+.done(function(data) {
+	$("#image_list").empty().append(data.html);
+    map.setView([data.latitude, data.longitude], 13);
+    var marker = L.marker([data.latitude, data.longitude]).addTo(map);
+    $(".longitude li p").html(data.longitude);
+    $(".latitude li p").html(data.latitude);
+  });
+};
+
+
+$('#input').on('submit', findImages);  
 
 
 
-GEvent.addListener(map, "click", function(marker,point) {
-        var latitude = point.y;
-        var longitude = point.x;
 
-        // do something with the lat/lng
-    });
